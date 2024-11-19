@@ -11,7 +11,7 @@ import sys
 MODBUS_ADDRESS = 69
 UART_PARAM = [9600, 'N', 2]
 DEVICE = 'map12e'
-PORT = '/dev/ttyRS485-2'
+PORT = '/dev/ttyRS485-1'
 
 
 tables = {
@@ -136,14 +136,14 @@ def do_read_tables(client, types, dumpfile=sys.stdout): #Gets a FILE type object
         dumpfile.write('holdings\n')
         for base_address, regs in result.items():
             regs_str = ', '.join(map(str, regs))
-            dumpfile.write(f'0x{base_address}: [{regs_str}]\n')
+            dumpfile.write(f'0x{base_address:02x}: [{regs_str}]\n')
 
     if 'inputs' in tables[types]:
         result = do_read_inputs(client, types)
         dumpfile.write('inputs\n')
         for base_address, regs in result.items():
             regs_str = ', '.join(map(str, regs))
-            dumpfile.write(f'0x{base_address}: [{regs_str}]\n')
+            dumpfile.write(f'0x{base_address:02x}: [{regs_str}]\n')
 
     dumpfile.close()
 
